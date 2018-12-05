@@ -17,3 +17,8 @@ virtualenv myenv  (no commond "virtualenv", pip install virtualenv)
 rd/s/q 盘符:\某个文件夹  （强制删除文件文件夹和文件夹内所有文件）
 del/f/s/q 盘符:\文件名  （强制删除文件，文件名必须加文件后缀名）
 
+
+自动删除指定的库和依赖库
+
+pip install pip-autoremove
+pip-autoremove jupyter -y
