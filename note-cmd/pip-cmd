@@ -1,0 +1,19 @@
+
+pip freeze：
+1）输入pip freeze >requirements.txt回车后
+
+2）我们创建一个独立环境 
+virtualenv myenv  (no commond "virtualenv", pip install virtualenv)
+然后进入myenv的Scripts文件夹中，输入activate来激活环境，
+
+激活以后命令行最前面会出现括号括着的标志如我们（myenv）， 
+此时我们执行命令 pip install -r C:\Users\Administrator\requirements.txt 
+就自动进行安装了。
+
+
+
+删除文件以及目录：
+
+rd/s/q 盘符:\某个文件夹  （强制删除文件文件夹和文件夹内所有文件）
+del/f/s/q 盘符:\文件名  （强制删除文件，文件名必须加文件后缀名）
+
