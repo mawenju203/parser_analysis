@@ -1,0 +1,38 @@
+当我们开发项目的时候，会用virtualenv创建 
+很多python独立环境，
+
+这时候就会出现在不同环境下安装相同的模块的时候， 
+为了避免我们通过联网下载所需模块，
+
+不如我们直接从之前python环境已经有的模块中直接拿来用。 
+这时候就需要使用到pip freeze命令。
+
+具体使用：
+
+我们打开cmd命令窗口，
+
+1）输入pip freeze >requirements.txt回车后
+
+
+
+此时在我的文件夹（C:\Users\Administrator）中会有产生一个名是 
+requirements.txt的文本文档
+
+2）我们创建一个独立环境 
+virtualenv myenv 
+然后进入myenv的Scripts文件夹中，输入activate来激活环境，
+
+激活以后命令行最前面会出现括号括着的标志如我们（myenv）， 
+此时我们执行命令 pip install -r C:\Users\Administrator\requirements.txt 
+就自动进行安装了。
+
+
+
+注意：
+
+C:\Users\Administrator\requirements.txt这是我的路径， 
+你的requirements.txt在哪你就换成你的路径。 
+名字（requirements.txt）也是可以更改的， 
+只要是收集模块前，和安装时候的名字一样就行了。 
+我收集的时候是（requirements.txt）， 
+所以安装的时候就要用之前收集的文件（requirements.txt）。
