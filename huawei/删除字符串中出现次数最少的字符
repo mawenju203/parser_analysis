@@ -1,0 +1,38 @@
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    int ascii[27] ;
+    string str,str_copy;
+    while (cin >> str)
+    {
+
+        int  c_i = 0;
+        while (c_i < 27)
+            ascii[c_i ++] = 0;
+
+        c_i = 0;
+        while (c_i < str.length())
+            ascii[str[c_i ++] - 'a'] ++;
+           
+        
+        c_i = 0;
+        int min_char = ascii[str[0] - 'a'];
+        while (c_i < 27)
+        {
+            if (min_char > ascii[c_i] && ascii[c_i] != 0)
+                min_char = ascii[c_i] ;
+            c_i ++;
+        }
+        c_i = 0;
+        str_copy = "";
+        while (c_i < str.length())
+        {
+            if (min_char != ascii[str[c_i] - 'a'])
+                str_copy += str[c_i];
+            c_i ++;
+        }
+        cout << str_copy << endl;
+    }
+}
