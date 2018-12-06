@@ -22,3 +22,6 @@ del/f/s/q 盘符:\文件名  （强制删除文件，文件名必须加文件后
 
 pip install pip-autoremove
 pip-autoremove jupyter -y
+
+question： code::Blocks运行报错cannot open output file bin\Debug\test.exe Permission denie
+answer：   win7 cmd:taskkill -IM <FILENAME>.exe /F    <FILENAME>替换成你运行程序的名字
