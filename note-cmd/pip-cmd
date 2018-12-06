@@ -25,3 +25,10 @@ pip-autoremove jupyter -y
 
 question： code::Blocks运行报错cannot open output file bin\Debug\test.exe Permission denie
 answer：   win7 cmd:taskkill -IM <FILENAME>.exe /F    <FILENAME>替换成你运行程序的名字
+
+查看进程详情，杀死:（win）
+tasklist ：列举进程详细信息
+1. 查看进程详细信息，这个命令会显示进程的很多信息
+wmic process where name="javaw.exe" get /format:value
+2. 指定显示某些列，可根据上面命令有选择的显示某些字段
+wmic process where name="javaw.exe" get CommandLine,ProcessId
