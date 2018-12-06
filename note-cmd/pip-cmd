@@ -3,7 +3,7 @@ pip freeze：
 1）输入pip freeze >requirements.txt回车后
 
 2）我们创建一个独立环境 
-virtualenv myenv  (no commond "virtualenv", pip install virtualenv)
+virtualenv myenv  (no command "virtualenv", pip install virtualenv)
 然后进入myenv的Scripts文件夹中，输入activate来激活环境，
 
 激活以后命令行最前面会出现括号括着的标志如我们（myenv）， 
@@ -32,3 +32,8 @@ tasklist ：列举进程详细信息
 wmic process where name="javaw.exe" get /format:value
 2. 指定显示某些列，可根据上面命令有选择的显示某些字段
 wmic process where name="javaw.exe" get CommandLine,ProcessId
+
+
+
+
+
