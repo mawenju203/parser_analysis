@@ -1,0 +1,42 @@
+/*
+题目描述
+数据表记录包含表索引和数值，请对表索引相同的记录进行合并，即将相同索引的数值进行求和运算，输出按照key值升序进行输出。
+输入描述:
+先输入键值对的个数
+然后输入成对的index和value值，以空格隔开
+输出描述:
+输出合并后的键值对（多行）
+*/
+网址https://www.nowcoder.com/practice/de044e89123f4a7482bd2b214a685201?tpId=37&tqId=21231&tPage=1&rp=&ru=/ta/huawei&qru=/ta/huawei/question-ranking
+
+解题思路：
+主要是考虑数据结构，在这就是考虑一下，多组数据，map<int ,int >mp，每一组要清空；
+时间复杂度O（n）空间复杂度O(n)
+
+#include<iostream>
+#include<map>
+using namespace std;
+int main()
+{
+    int  num;
+    map<int ,int >mp;
+    int key, value;
+    while (cin >> num)
+    {
+        int c_i = 0;
+        while (c_i < num)
+        {
+            cin >> key >> value;
+            if (mp.count(key) == 0)
+                mp[key] = value;
+            else
+                mp[key] += value;
+            c_i ++;
+        }
+        map<int,int>::iterator iter;
+        for(iter = mp.begin(); iter != mp.end(); iter++)  
+            cout<<iter->first<<' '<<iter->second<<endl;  
+        mp.clear();
+    }
+    return 0;
+}
