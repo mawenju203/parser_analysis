@@ -10,6 +10,8 @@ virtualenv myenv  (no command "virtualenv", pip install virtualenv)
 此时我们执行命令 pip install -r C:\Users\Administrator\requirements.txt 
 就自动进行安装了。
 
+虚拟化一个 python3 环境：
+virtualenv -p /usr/bin/python3 py3env  “/usr/bin/python3”是python3 的安装路径
 
 
 删除文件以及目录：
