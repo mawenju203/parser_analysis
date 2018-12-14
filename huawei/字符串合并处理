@@ -1,0 +1,112 @@
+题目描述
+按照指定规则对输入的字符串进行处理。
+详细描述：
+将输入的两个字符串合并。
+对合并后的字符串进行排序，要求为：下标为奇数的字符和下标为偶数的字符分别从小到大排序。这里的下标意思是字符在字符串中的位置。
+对排序后的字符串进行操作，如果字符为‘0’——‘9’或者‘A’——‘F’或者‘a’——‘f’，则对他们所代表的16进制的数进行BIT倒序的操作，并转换为相应的大写字符。如字符为‘4’，为0100b，则翻转后为0010b，也就是2。转换后的字符为‘2’； 如字符为‘7’，为0111b，则翻转后为1110b，也就是e。转换后的字符为大写‘E’。
+
+举例：输入str1为"dec"，str2为"fab"，合并为“decfab”，分别对“dca”和“efb”进行排序，排序后为“abcedf”，转换后为“5D37BF”
+接口设计及说明：
+/*
+功能:字符串处理
+输入:两个字符串,需要异常处理
+输出:合并处理后的字符串，具体要求参考文档
+返回:无
+*/
+void ProcessString(char* str1,char *str2,char * strOutput)
+{
+}
+
+网址：
+https://www.nowcoder.com/practice/d3d8e23870584782b3dd48f26cb39c8f?tpId=37&tqId=21253&tPage=2&rp=&ru=/ta/huawei&qru=/ta/huawei/question-ranking
+
+解题思路：
+首先是排序，然后是翻转，
+时间复杂度为O（Nlog（N））;
+
+coding:
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+char turn_16(char word)
+{
+
+    if (( word <= '9' && word >= '0') || (word <= 'f' && word >= 'a') || (word <= 'F' && word >= 'A'))
+    {
+        if (word == 'A' || word == 'a')
+            return '5';
+        else if (word == 'B' || word == 'b')
+            return  'D';
+        else if (word == 'C' || word == 'c')
+            return '3';
+        else if (word == 'D' || word == 'd')
+            return  'B';
+        else if (word == 'E' || word == 'e')
+            return '7';
+        else if (word == 'F' || word == 'f')
+            return 'F';
+        else if (word == '0')
+            return  '0';
+        else if (word == '1')
+            return '8';
+        else if (word == '2')
+            return  '4';
+        else if (word == '3')
+            return 'C';
+        else if (word == '4')
+            return '2';
+        else if (word == '5')
+            return  'A';
+        else if (word == '6')
+            return '6';
+        else if (word == '7')
+            return  'E';
+        else if (word == '8')
+            return '1';
+        else
+            return '9';
+    }
+    else
+        return word;
+}
+int main ()
+{
+    string str1, str2;
+    while (cin >> str1 >> str2)
+    {
+        string str_ret = str1 + str2;
+        str1 = "";
+        str2 = "";
+        int c_i = 0;
+        int str_length = str_ret.length();
+        while (c_i < str_length)
+        {
+            if (c_i % 2 )
+                str2 += str_ret[c_i];
+            else
+                str1 += str_ret[c_i];
+            c_i ++;
+        }
+        sort(str1.begin(), str1.end());
+        sort(str2.begin(), str2.end());
+        c_i = 0;
+        str_ret = "";
+        while (c_i < str_length)
+        {
+            if (c_i % 2 == 0)
+                str_ret += str1[c_i / 2];
+            else
+                str_ret += str2[c_i / 2];
+            c_i ++;
+        }
+        c_i = 0;
+        while (c_i < str_length)
+        {
+            str_ret[c_i] = turn_16(str_ret[c_i]);
+            c_i ++;
+        }
+        cout << str_ret << endl;
+    }
+    return 0;
+}
