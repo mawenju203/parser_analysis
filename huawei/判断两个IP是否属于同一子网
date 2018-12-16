@@ -1,0 +1,164 @@
+题目描述
+子网掩码是用来判断任意两台计算机的IP地址是否属于同一子网络的根据。
+子网掩码与IP地址结构相同，是32位二进制数，其中网络号部分全为“1”和主机号部分全为“0”。利用子网掩码可以判断两台主机是否中同一子网中。若两台主机的IP地址分别与它们的子网掩码相“与”后的结果相同，则说明这两台主机在同一子网中。
+示例：
+I P 地址　 192.168.0.1
+子网掩码　 255.255.255.0
+转化为二进制进行运算：
+I P 地址　11010000.10101000.00000000.00000001
+子网掩码　11111111.11111111.11111111.00000000
+AND运算
+ 　　　　11000000.10101000.00000000.00000000
+转化为十进制后为：
+ 　　　　192.168.0.0
+ 
+I P 地址　 192.168.0.254
+子网掩码　 255.255.255.0
+
+转化为二进制进行运算：
+I P 地址　11010000.10101000.00000000.11111110
+子网掩码　11111111.11111111.11111111.00000000
+AND运算
+　　　　　11000000.10101000.00000000.00000000
+转化为十进制后为：
+　　　　　192.168.0.0
+通过以上对两台计算机IP地址与子网掩码的AND运算后，我们可以看到它运算结果是一样的。均为192.168.0.0，所以这二台计算机可视为是同一子网络。
+/* 
+* 功能: 判断两台计算机IP地址是同一子网络。 
+* 输入参数：    String Mask: 子网掩码，格式：“255.255.255.0”； 
+*               String ip1: 计算机1的IP地址，格式：“192.168.0.254”；
+*               String ip2: 计算机2的IP地址，格式：“192.168.0.1”；
+*               
+* 返回值：      0：IP1与IP2属于同一子网络；     1：IP地址或子网掩码格式非法；    2：IP1与IP2不属于同一子网络
+*/ 
+public int checkNetSegment(String mask, String ip1, String ip2) 
+{     
+    /*在这里实现功能*/
+    return 0;
+}
+
+输入描述:
+输入子网掩码、两个ip地址
+输出描述:
+得到计算结果
+
+
+网址：https://www.nowcoder.com/practice/34a597ee15eb4fa2b956f4c595f03218?tpId=37&tqId=21262&tPage=2&rp=&ru=/ta/huawei&qru=/ta/huawei/question-ranking
+
+解题思路：
+首先是对字符串处理，将每个字符串转换为iPv4的数字 int[4];  首先判断mask和ipv4 是否是正确的，然后进行&运算；
+coding：
+
+#include<iostream>
+#include<string>
+#include<stdlib.h>
+using namespace std;
+void tmp_cut(int tmp[3][4], string str,int sub)
+{
+    int local[5];
+    local[0] = -1;
+    local[4] = str.length();
+    int c_j = 1;
+    while (c_j < 4 && local[c_j] != -1)
+    {
+        local[c_j] = str.find('.',local[c_j - 1] + 1);
+        c_j ++;
+    }
+ 
+    c_j = 1;
+ 
+    while (c_j < 5 && local[c_j] != -1)
+    {
+        //string tmp_tr = str.substr(local[c_j - 1] + 1,local[c_j] - local[c_j - 1] - 1).c_str();
+        tmp[sub][c_j - 1] = atoi(str.substr(local[c_j - 1] + 1,local[c_j] - local[c_j - 1] - 1).c_str());
+        c_j ++;
+    }
+ 
+}
+ 
+bool judge(int tmp[3][4])
+{
+    int c_i, c_j;
+    for (c_i = 0; c_i < 3; c_i ++)
+    {
+        for (c_j = 0; c_j < 4; c_j ++)
+        {
+            if (tmp[c_i][c_j] > 255 || tmp[c_i][c_j] < 0)
+                return false;
+        }
+    }
+    c_j = 0;
+    if (1)
+    {
+        char mask[32];
+        while (c_j < 32)
+            mask[c_j ++] = '0';
+        c_j = 0;
+        int c_k = 0;
+        c_i = 0;
+        int cmp[4] = {tmp[0][0],tmp[0][1],tmp[0][2],tmp[0][3]};
+        while (c_i < 4)
+        {
+            c_k = 0;
+            while (cmp[c_i])
+            {
+                mask[c_i * 8 + c_k] = (cmp[c_i] & 1) + '0';
+                cmp[c_i] >>= 1;
+                c_k ++;
+            }
+            c_i ++;
+        }
+        //cout << mask << endl;
+        int flag = 0;
+        c_j = 1;
+        while (c_j < 32)
+        {
+            if (mask[c_j - 1] != mask[c_j])
+                flag ++;
+            c_j ++;
+ 
+        }
+        if (flag > 1)
+            return false;
+ 
+ 
+    }
+ 
+    return true;
+ 
+}
+bool goahead(int tmp[3][4])
+{
+    int c_i = 0;
+    while (c_i < 4)
+    {
+        if ((tmp[0][c_i] & tmp[1][c_i]) != (tmp[0][c_i] & tmp[2][c_i]))
+            return false;
+        c_i ++;
+    }
+    return true;
+ 
+}
+int main ()
+{
+    string mask,ip1,ip2;
+    while (cin >> mask >> ip1 >> ip2)
+    {
+        int tmp[3][4] = {0};
+        tmp_cut(tmp,mask,0);
+        tmp_cut(tmp,ip1,1) ;
+        tmp_cut(tmp,ip2,2);
+ 
+            if (judge(tmp))
+            {
+                if (goahead(tmp))
+                    cout << '0' << endl;
+                else
+                    cout << '2' << endl;
+            }
+            else
+                cout << '1' << endl;
+    }
+    return 0;
+ 
+}
