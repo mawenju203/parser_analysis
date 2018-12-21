@@ -1,0 +1,51 @@
+题目描述
+
+There are N children standing in a line. Each child is assigned a rating value.
+You are giving candies to these children subjected to the following requirements:
+Each child must have at least one candy.
+Children with a higher rating get more candies than their neighbors.
+What is the minimum candies you must give?
+
+网址：https://www.nowcoder.com/practice/74a62e876ec341de8ab5c8662e866aef?tpId=46&tqId=29045&tPage=1&rp=1&ru=/ta/leetcode&qru=/ta/leetcode/question-ranking
+
+解题思路：
+首先找到数组中的递增序列，然后寻找递减序列，然后比较返回加上每个评级对应的最大的糖果数；
+时间复杂度为O（n），空间复杂度为O（n）
+
+coding：
+
+class Solution {
+public:
+    int candy(vector<int> &ratings) {
+        int num = ratings.size();
+        vector<int> candy_num(num,1);
+        vector<int> candy_num_2(num,1);
+        int c_i = 1;
+        while (c_i < num)
+        {
+            if (ratings[c_i] > ratings[c_i - 1])
+                candy_num[c_i] = candy_num[c_i - 1] + 1;
+
+            c_i ++;
+        }
+        c_i -= 2;
+        while (c_i > -1)
+        {
+            if (ratings[c_i] > ratings[c_i + 1])
+                candy_num_2[c_i] = candy_num_2[c_i + 1] + 1;
+
+            c_i --;
+        }
+        c_i = 0;
+        int ret = 0;
+        while (c_i < num)
+        {
+            if (candy_num[c_i] >= candy_num_2[c_i])
+                ret += candy_num[c_i];
+            else
+                ret += candy_num_2[c_i];
+            c_i ++;
+        }
+        return ret;
+    }
+};
