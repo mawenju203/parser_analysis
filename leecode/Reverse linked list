@@ -1,0 +1,74 @@
+Reverse a singly linked list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+
+
+网址：https://leetcode.com/problems/reverse-linked-list/
+
+解题思路：
+一、插入，
+二、首尾相连，然后一直迭代。
+
+coding：
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList_1(ListNode* head) {
+        if (head == NULL)
+            return head;
+        ListNode * node = new ListNode(0);
+        node->next = head;
+        ListNode * pre_head = node;
+        ListNode * iter_list = head->next;
+        head->next = NULL;
+        ListNode * mid = NULL;
+        while (iter_list)
+        {
+            mid = iter_list->next;
+            pre_head->next = iter_list;
+            iter_list->next = head;
+            head = iter_list;
+            iter_list = mid;
+        }
+        return node->next;
+        
+    }
+    
+    
+    
+    ListNode* reverseList_2(ListNode* head) {
+        if (head == NULL || head->next == NULL)
+            return head;
+        ListNode * p = head;
+        ListNode * q = p->next;
+        if (q)
+        {
+            ListNode * r = q->next;
+            p->next = NULL;
+            while (r)
+            {
+                q->next = p;
+                p = q;
+                q = r;
+                r = r->next;
+            }
+            q->next = p;
+            p = q;
+            
+        }
+        return p;
+
+    }
+};
