@@ -1,0 +1,61 @@
+Reverse a linked list from position m to n. Do it in one-pass.
+
+Note: 1 ≤ m ≤ n ≤ length of list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+
+
+网址：https://leetcode.com/problems/reverse-linked-list-ii/
+
+解题思路：
+首先是添加一个头结点，其次找到m的位置和m前一个位置；然后将后面的到n的ListNode都添加进来，只要遍历最多一边链表即可。
+时间复杂度为O(n);空间复杂度为O(1)；
+
+coding：
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+    if (m == n)
+        return head;
+    ListNode * node = new ListNode(0);
+    node->next = head;
+    head = node;
+    ListNode * p_m_begin = node;
+    int c_i = 0;
+    while (c_i < m)
+    {
+        if (c_i + 1 == m)
+            p_m_begin = head;
+        head = head->next;
+        c_i ++;
+    }
+    ListNode * tmp = NULL;
+    ListNode * end_re = head;//尾巴；
+    ListNode * p_m_iter = head->next;
+    while (c_i < n)
+    {
+        tmp = p_m_iter->next;
+        p_m_iter->next = head;
+        p_m_begin->next = p_m_iter;
+        head = p_m_begin->next;
+        p_m_iter = tmp;
+        c_i ++;
+    }
+    end_re->next = tmp;
+
+
+    return node->next;
+        
+    }
+};
