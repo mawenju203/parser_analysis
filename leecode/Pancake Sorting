@@ -1,0 +1,84 @@
+969. Pancake Sorting My SubmissionsBack to Contest
+User Accepted: 1182
+User Tried: 1369
+Total Accepted: 1385
+Total Submissions: 2252
+Difficulty: Medium
+Given an array A, we can perform a pancake flip: We choose some positive integer k <= A.length, then reverse the order of the first k elements of A.  We want to perform zero or more pancake flips (doing them one after another in succession) to sort the array A.
+
+Return the k-values corresponding to a sequence of pancake flips that sort A.  Any valid answer that sorts the array within 10 * A.length flips will be judged as correct.
+
+ 
+
+Example 1:
+
+Input: [3,2,4,1]
+Output: [4,2,4,3]
+Explanation: 
+We perform 4 pancake flips, with k values 4, 2, 4, and 3.
+Starting state: A = [3, 2, 4, 1]
+After 1st flip (k=4): A = [1, 4, 2, 3]
+After 2nd flip (k=2): A = [4, 1, 2, 3]
+After 3rd flip (k=4): A = [3, 2, 1, 4]
+After 4th flip (k=3): A = [1, 2, 3, 4], which is sorted. 
+Example 2:
+
+Input: [1,2,3]
+Output: []
+Explanation: The input is already sorted, so there is no need to flip anything.
+Note that other answers, such as [3, 3], would also be accepted.
+ 
+
+Note:
+
+1 <= A.length <= 100
+A[i] is a permutation of [1, 2, ..., A.length]
+网址：https://leetcode.com/contest/weekly-contest-118/problems/pancake-sorting/
+解题思路：
+例如 ：
+一个次操作：
+数组 ： 3 2 4 1
+找到 4 的位置 2；
+reverse（ret.begin() ，ret.begin() + 2 + 1）将 4 flip 到 第一个位置 ，即为 4 2 3 1；将 2+1 存储到序列中
+当前 4 的位置 为第一个
+故 reverse（ret.begin() ，ret.begin() + 4）；将 4 存储到返回值中；
+当 4 的位置恰好为 在自己的位置；则不添加；
+
+coding ：
+class Solution {
+public:
+    vector<int> pancakeSort(vector<int>& A) {
+        vector<int> flip;
+        int c_i = A.size();
+        int c_j ;
+        while (c_i > 1)
+        {
+            c_j = c_i - 1 ;
+            while (c_j > 0)
+            {
+                if (c_i == A[c_j])
+                    break ;
+                c_j -- ;
+            }
+            if (c_j + 1 == c_i)
+            {
+                c_i -- ;
+                continue ;
+            }
+            if (c_j == 0)
+            {
+                reverse(A.begin(), A.begin() + c_i) ;
+                flip.push_back(c_i) ;
+                c_i -- ;
+            }
+            else
+            {
+                reverse(A.begin(), A.begin() + c_j + 1) ;
+                flip.push_back(c_j + 1) ;
+            }
+
+        }
+        return flip;
+        
+    }
+};
