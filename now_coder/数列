@@ -1,0 +1,57 @@
+题目描述
+某种特殊的数列a1, a2, a3, ...的定义如下：a1 = 1, a2 = 2, ... , an = 2 * an − 1 + an - 2 (n > 2)。
+给出任意一个正整数k，求该数列的第k项模以32767的结果是多少？
+输入描述:
+第1行是测试数据的组数n，后面跟着n行输入。每组测试数据占1行，包括一个正整数k (1 ≤ k < 1000000)。
+输出描述:
+n行，每行输出对应一个输入。输出应是一个非负整数。
+
+网址：https://www.nowcoder.com/practice/1843c3b052984e3f98c68935ea3c0d79?tpId=90&&tqId=30983&rp=1&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+vector：动态添加数组；
+根据k1,...kn,的值来选择是否增加vector的数据，减少内存的使用，可以保证vector.size() == max（k1，...,kn) + 1;
+vector内数据的的计算按照公式：an = （2 * an − 1 + an - 2） % 32767即可；%32767 保证数据不会出现 超出int数据的表示范围；
+空间复杂度O(max（k1，...,kn)),时间复杂度O(max（k1，...,kn))
+
+
+
+
+coding:
+#include<iostream>
+#include<vector>
+using namespace std ;
+int main ()
+{
+    int k , n ;
+    vector<int> ret ;
+    ret.push_back(0) ;
+    ret.push_back(1) ;
+    ret.push_back(2) ;
+    while (cin >> n)
+    {
+        int c_i = 0 ;
+        //return_int(1000000 , ret);
+        while (c_i < n)
+        {
+            cin >> k ;
+            int ret_len = ret.size() ;
+            if (k < ret_len)
+                cout << ret[k] << endl ;
+            else
+            {
+                int tmp ;
+                while (ret_len <= k)
+                {
+                    tmp = (ret[ret_len - 1] * 2 + ret[ret_len - 2]) % 32767 ;
+                    ret.push_back(tmp) ;
+                    ret_len ++ ;
+                }
+                cout << ret[k] << endl ;
+            }
+            c_i ++ ;
+        }
+    }//while
+
+    return 0 ;
+}
