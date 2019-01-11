@@ -1,0 +1,51 @@
+题目描述
+如果我们列出10以内所有3或5的倍数，我们将得到3、5、6和9，这些数的和是23。求n以内所有3或5的倍数的和。
+输入描述:
+输入n，n不超过2000
+输出描述:
+输出n以内3或5倍数的和
+
+网址：https://www.nowcoder.com/practice/9a00f1ef904e4d549fdebf5038b308f6?tpId=90&&tqId=30884&rp=11&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+
+解题思路：
+首先是累加 3 的 倍数 ，然后累加 5 的倍数（- 3 * 5 的倍数的数据）；最后得出的即为结果；
+时间复杂度O(n)；空间复杂度O(1)；
+
+
+coding：
+
+#include<iostream>
+
+using namespace std ;
+int process(int n)
+{
+    int ret = 0 ;
+    int c_i = 1 ;
+    int tmp = 3 * c_i ;
+    while (tmp < n)
+    {
+        ret += tmp ;
+        c_i ++;
+        tmp = c_i * 3 ;
+    }
+    c_i = 1 ;
+    tmp = 5 * c_i ;
+    while (tmp < n)
+    {
+        if (tmp % 3)
+            ret += tmp ;
+        else
+            ret -= tmp ;
+        c_i ++ ;
+        tmp = c_i * 5 ;
+    }
+
+    return ret ;
+}
+int main ()
+{
+    int n ;
+    while (cin >> n)
+        cout << process(n) << endl ;
+}
