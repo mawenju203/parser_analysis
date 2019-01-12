@@ -35,3 +35,25 @@ int main ()
         cout << str << endl ;
     }
 }
+
+
+第二种方法：
+int rever_num ()
+{
+    string str ;
+    while (cin >> str)
+    {
+        int len_str = str.length() ;
+        int c_i = len_str / 2 ;
+        int c_j = 0 ;
+        while (c_j < len_str)
+        {
+            if (c_j < c_i)
+                cout << str[c_j] ;
+            else
+                cout << str[len_str - 1 - c_j] ;
+            c_j ++ ;
+        }
+        cout << endl ;
+    }
+}
