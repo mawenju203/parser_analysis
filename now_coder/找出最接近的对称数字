@@ -1,0 +1,37 @@
+题目描述
+输入一个正整数的字符串，输出与它最接近的对称数字(不包括它自己)的字符串
+注1: 输入字符串的长度最多不会超过18
+注2: 当大于输入数字和小于输入数字的对称数字与输入数字距离相同时，取小的数字作为答案 
+输入描述:
+输入为一个正整数的字符串
+输出描述:
+输出为与输入数字最接近的对称数字(不包括输入本身)的字符串
+
+网址：https://www.nowcoder.com/practice/e605ba77112b425889bee3f40481fe93?tpId=90&&tqId=30974&rp=2&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+利用对称性；替换最后的数字即可；
+例如 ：
+169784691
+结果：169787961；
+时间复杂度为O(num.length（）);空间复杂度为O(1)；
+
+coding：
+#include<iostream>
+#include<string>
+using namespace std ;
+int main ()
+{
+    string str ;
+    while (cin >> str)
+    {
+        int len_str = str.length() ;
+        int c_i = len_str / 2 ;
+        while (c_i < len_str)
+        {
+            str[c_i] = str[len_str - 1 - c_i] ;
+            c_i ++ ;
+        }
+        cout << str << endl ;
+    }
+}
