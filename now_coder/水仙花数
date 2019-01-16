@@ -1,0 +1,53 @@
+春天是鲜花的季节，水仙花就是其中最迷人的代表，数学上有个水仙花数，他是这样定义的：“水仙花数”是指一个三位数，它的各位数字的立方和等于其本身，比如：153=1^3+5^3+3^3。 现在要求输出所有在m和n范围内的水仙花数。
+
+网址：https://www.nowcoder.com/practice/11c9f023a9f84418a15b48792a5f7c70?tpId=90&&tqId=30943&rp=5&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+1000以内的数字都计算一遍；
+#include<cstring>
+memset(ret, false , 1000);
+
+coding：
+#include<iostream>
+#include<cstring>
+using namespace std ;
+int main()
+{
+    bool ret [1000] ;
+    memset(ret, false , 1000);
+    int i , j , k ;
+    int tmp ;
+    for (i = 0 ; i < 10 ; i ++)
+    {
+        for (j = 0 ; j < 10 ; j ++)
+        {
+            for (k = 0 ; k < 10 ; k ++)
+            {
+                tmp = i * 100 + j * 10 + k ;
+                if ((i * i * i + j * j * j + k * k * k) == tmp)
+                    ret[tmp] = true ;
+            }
+        }
+    }
+    int m , n ;
+    int len ;
+    while (cin >> m >> n)
+    {
+        len = 0 ;
+        int c_i = m ;
+        while (c_i <= n)
+        {
+            if (ret[c_i])
+            {
+                cout << c_i << ' ' ;
+                len ++ ;
+            }
+            c_i ++ ;
+        }
+        if (len)
+            cout << endl ;
+        else
+            cout << "no" << endl ;
+    }
+    return 0 ;
+}
