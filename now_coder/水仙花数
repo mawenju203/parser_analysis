@@ -51,3 +51,49 @@ int main()
     }
     return 0 ;
 }
+
+第二种解法：
+int process_shui()
+{
+    vector<int> ret ;
+    int i , j , k ;
+    int tmp ;
+    for (i = 1 ; i < 10 ; i ++)
+    {
+        for (j = 0 ; j < 10 ; j ++)
+        {
+            for (k = 0 ; k < 10 ; k ++)
+            {
+                tmp = i * 100 + j * 10 + k ;
+                if (i * i * i + j * j * j + k * k * k == tmp)
+                    ret.push_back(tmp) ;
+            }
+        }
+    }
+    int m , n ;
+    int len ;
+
+    while (cin >> m >> n)
+    {
+        len = 0 ;
+        int c_i = 0 ;
+        while (c_i < ret.size())
+        {
+            if (ret[c_i] >= m && ret[c_i] <= n)
+            {
+                cout << ret[c_i] << ' ' ;
+                len ++ ;
+            }
+
+            c_i ++ ;
+        }
+
+        if (len)
+            cout << endl ;
+        else
+            cout << "no" << endl ;
+    }
+    return 0 ;
+}
+
+
