@@ -14,16 +14,4 @@ ssh -p 7771 mwj@222.197.219.26
 例如：scp -r test root@192.168.0.101:/root/ 把当前目录下的test目录上传到服务器的/root/ 目录
 
 
-linux上安装java jdk：
-1、 解压压缩包： $ tar zxvf jdk-8u121-linux-x64.tar.gz
-2、 设置环境变量 ：$ sudo vi /etc/profile
-    在文件最后，添加如下内容： 
-    #Java Env
-    export JAVA_HOME=/usr/jdk1.8.0_121
-    export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-    export PATH=$PATH:$JAVA_HOME/bin
-3、 使环境变量设置立即生效
-    $ source /etc/profile
 
-4、 查看JDK版本
-    $ java -version
