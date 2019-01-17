@@ -1,0 +1,55 @@
+给定一个数组metrix，数组中只包含1和0，且数组中的1都不相邻，输入一个数n，问能否在将数组中n个0替代换成1后不破坏1都不相邻的条件。
+例1 metrix=[1,0,0,0,1],n=1输出true
+例2 metrix=[1,0,0,0,1],n=2输出false
+
+网址：https://www.nowcoder.com/practice/b0c948dbe577485598b982a430d65c39?tpId=90&&tqId=30961&rp=3&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路；
+保证“1”的左右一个位置都为“0”：即为 0 1 0 ；
+所以首先在的第一个位置和最后一个位置添加一个 “0”；然后 当 c_i - 1 , c_i , c_i + 1;三个位置的和 为“0”；可以将c_i 位置的值置“1”； n - 1 ;
+最后遍历完毕，判断“n == 0”则输出为 true；
+
+
+coding：
+#include<iostream>
+#include<vector>
+using namespace std ;
+int main()
+{
+    vector<int> ret ;
+    int m ;
+    while (cin >> m)
+    {
+        ret.push_back(0) ;
+        int c_i = 0 ;
+        int tmp ;
+        while (c_i < m)
+        {
+            cin >> tmp ;
+            ret.push_back(tmp) ;
+            c_i ++ ;
+        }
+        ret.push_back(0) ;
+        int n ;
+        cin >> n ;
+        c_i = 1 ;
+        while (c_i <= m)
+        {
+            if (ret[c_i - 1] + ret[c_i + 1] + ret[c_i] == 0)
+            {
+                n -- ;
+                ret[c_i] = 1 ;
+            }
+                
+            if (n == 0)
+                break ;
+            c_i ++ ;
+        }
+        if (n == 0)
+            cout << "true" << endl ;
+        else
+            cout << "false" << endl ;
+        ret.clear() ;
+    }
+    return 0 ;
+}
