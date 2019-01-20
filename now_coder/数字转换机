@@ -1,0 +1,59 @@
+小Q从牛博士那里获得了一个数字转换机，这台数字转换机必须同时输入两个正数a和b，并且这台数字转换机有一个红色的按钮和一个蓝色的按钮：
+
+当按下了红色按钮，两个数字同时加1。
+
+当按下了蓝色按钮，两个数字同时乘2。
+
+小Q现在手中有四个整数a，b，A，B，他希望将输入的两个整数a和b变成A，B（a对应A，b对应B）。因为牛博士允许小Q使用数字转换机的时间有限，所以小Q希望按动按钮的次数越少越好。请你帮帮小Q吧。
+
+输入描述:
+输入包括一行，一行中有四个正整数a，b，A，B，（1≤a，b，A，B≤10^9）。
+输出描述:
+如果小Q可以完成转换，输出最少需要按动按钮的次数，否则输出-1。
+
+网址：https://www.nowcoder.com/practice/e870b63e149341c8b6441bc9ebf963d6?tpId=90&&tqId=30957&rp=3&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：（过程要两队数字同时进行）
+a（100） --> A（205） ; + 1 , * 1; enter 为 按键的次数； 
+a2 = a * 2 ;
+最快的方式：循环判断条件 while（A >= a2） 205 % 2 ； enter += 1 + 205 % 2 ；
+当 A < a2 时； 102 < 200; enter += 102 - 100 ；
+enter即为最后要按键的次数；
+时间复杂度O（log n）；空间复杂度为：O(1)；
+
+coding:
+#include<iostream>
+using namespace std ;
+int main()
+	{
+	    int a , b , A , B ;
+	    int enter ;
+	    int a2 , b2 ;
+	    bool station ;
+	    while (cin >> a >> b >> A >> B)
+        {
+            enter = 0 ;
+            station = true ;
+            a2 = a * 2 ;
+            b2 = b * 2 ;
+            while (A >= a2)
+            {
+                enter += 1 + A % 2 ;
+                if (A % 2 != B % 2)
+                {
+                   station = false ;
+                   break ;
+                }
+                A >>= 1 ;
+                B >>= 1 ;
+
+            }
+            enter += (A - a) ;
+            if (A - a == B - b && station)
+                cout << enter << endl ;
+            else
+                cout << -1 << endl ;
+
+        }
+        return 0 ;
+}
