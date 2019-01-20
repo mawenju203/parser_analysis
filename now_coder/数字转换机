@@ -57,3 +57,50 @@ int main()
         }
         return 0 ;
 }
+
+解题思路2：
+while（A > 2 * a）（ -（A % 2） ； 1 ；） ；最后（a - A）；
+先从 a --> A ; 使用vector 存储 操作步奏；然后 b 按照逆序的方式 到 B；若是 b = B；则输出结果enter；反之输出 -1
+时间复杂度O(log n)；空间复杂度为（log n）
+
+	int main()
+	{
+	    int a , b , A , B ;
+	    int enter ;
+	    int a2 ;
+	    vector<int> ret ;
+	    while (cin >> a >> b >> A >> B)
+        {
+            enter = 0 ;
+            a2 = a * 2 ;
+            while (A >= a2)
+            {
+                if (A % 2 != 0)
+                    ret.push_back(- (A % 2)) ;
+                ret.push_back(1) ;
+                enter += 1 + A % 2 ;
+                A >>= 1 ;
+            }
+            if (A - a != 0)
+            {
+                ret.push_back(a - A) ;
+                enter += A - a ;
+            }
+
+            int len = ret.size() ;
+            for (int i = ret.size() - 1 ; i > -1 ; i --)
+            {
+                if (ret[i] < 0)
+                    b -= ret[i] ;
+                else
+                    b *= 2 ;
+            }
+            if (b == B)
+                cout << enter << endl ;
+            else
+                cout << -1 << endl ;
+            ret.clear() ;
+
+        }
+        return 0 ;
+	}
