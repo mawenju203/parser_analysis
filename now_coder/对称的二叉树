@@ -1,0 +1,69 @@
+请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的;
+
+网址：https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb?tpId=13&tqId=11211&tPage=3&rp=3&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
+
+解题思路：
+使用优先队列queue实现层次遍历；
+queue1：是先左后右；
+queue2：是先右后左；
+每一次都要比较queue1.front()->val == queue2.front()->val;如果遍历完还未曾出现不相等的情况；即为是对称的；
+时间复杂度为：O(n)；空间复杂度为O(2n)；
+
+
+coding:
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+
+    bool isSymmetrical(TreeNode* pRoot)
+    {
+        if (pRoot == NULL || (pRoot->left == NULL && pRoot->right == NULL) )
+            return true;
+        queue<TreeNode *> retR;
+        queue<TreeNode *> retL;
+        retR.push(pRoot) ;
+        retL.push(pRoot) ;
+        TreeNode * fR = NULL ;
+        TreeNode * fL = NULL ;
+        bool station = true ;
+        while (!retL.empty() && !retR.empty())
+        {
+            fR = retR.front() ;
+            fL = retL.front() ;
+            retR.pop() ;
+            retL.pop() ;
+            if (fL->left != NULL && fR->right != NULL && fL->left->val == fR->right->val)
+            {
+                retL.push(fL->left) ;
+                retR.push(fR->right) ;
+            }
+            else if (fL->left == NULL && fR->right == NULL) ;
+            else{
+                station = false ;
+                break ;
+            }
+            if (fL->right != NULL && fR->left != NULL && fL->right->val == fR->left->val)
+            {
+                retL.push(fL->right) ;
+                retR.push(fR->left) ;
+            }
+            else if (fL->right == NULL && fR->left == NULL) ;
+            else{
+                station = false ;
+                break ;
+            }
+        }
+        return station ;
+
+    }
+
+};
