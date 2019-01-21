@@ -1,0 +1,48 @@
+从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+
+网址：https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288?tpId=13&tqId=11213&tPage=3&rp=3&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
+
+
+解题思路：
+二叉树的层次遍历可以使用queue容器STL（FIFO）；
+然后最关键的就是如何确定下一行的最后一个TreeNode元素；
+首先就是root作为第一行的最后一个元素；
+如果遍历的时候遇到   ==root （地址比较）；则前面找到的最后一个元素即为下一行的最后一个元素；以此类推即可；
+时间复杂度：O(n) ；空间复杂度O(n/2)
+
+coding：
+vector<vector<int> > printTree(TreeNode* root) {
+    vector<vector<int> > retVector ;
+    if (root == NULL)
+        return retVector ;
+    vector<int> tmpVector ;
+    queue<TreeNode *> ret;
+    ret.push(root) ;
+    TreeNode * nextLine = root ;
+    TreeNode * tmp = NULL ;
+    TreeNode * fs = NULL ;
+    while (!ret.empty())
+    {
+        fs = ret.front() ;
+        ret.pop() ;
+        tmpVector.push_back(fs->val) ;
+        if (fs->left != NULL)
+        {
+            ret.push(fs->left) ;
+            tmp = fs->left ;
+        }
+        if (fs->right != NULL)
+        {
+            ret.push(fs->right) ;
+            tmp = fs->right ;
+        }
+        if (fs == nextLine)
+        {
+            retVector.push_back(tmpVector) ;
+            tmpVector.clear() ;
+            nextLine = tmp ;
+        }
+    }
+    return retVector ;
+
+}
