@@ -1,0 +1,84 @@
+一个正整数是素数当且仅当它除了1和自身以外没有其他因子，现在我们定义双素数；一个正整数是双素数当且仅当它本身是个素数，
+并且将他的十进制表示反转后得到数不等于它自身且也是个素数，如13就是一个双素数，因为13和31不相等且都是素数，
+现给出一个整数k,你需要找到第k小的双素数
+
+输入描述:
+第一行包含一个整数k,1≤k≤10000
+输出描述:
+若第k小的素数不超过10^6则输出它，否则输出-1
+
+网址：https://www.nowcoder.com/practice/8cb1f3979b524ed1ba67b4f64ed9e4f2?tpId=90&&tqId=30935&rp=5&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+判断是否是素数；
+然后使用vector 动态添加数据；避免重复的计算；
+最重要的就是库函数 stoi（）：string --> int ; to_string: int --> string ;
+时间复杂度：O(max（...）);空间复杂度：O(max（...）);
+
+coding：
+#include<iostream>
+#include<algorithm>
+#include<math.h>
+#include<vector>
+using namespace std;
+bool isPrime(int num)
+{
+    int mid = sqrt(num) ;
+    for (int c_i = 2 ; c_i <= mid ; c_i ++)
+        if (num % c_i == 0)
+            return false ;
+    return true ;
+}
+int main()
+{
+    int num ;
+    vector<int> ret ;
+    string str ;
+    ret.push_back(13) ;
+    while (cin >> num)
+    {
+        int len = ret.size() ;
+        if (num <= len)
+            cout << ret[num - 1] << endl ;
+        else if (ret[len - 1] >= 1000000)
+            cout << -1 << endl ;
+        else// add 数据；
+        {
+            int c_i = ret[len - 1] ;
+            int tmp ;
+            c_i ++ ;
+            bool sta = true ;
+            while (len < num)
+            {
+                if (c_i >= 1000000)
+                {
+                     sta = false ;
+                     break ;
+                }
+                if (isPrime(c_i))
+                {
+                    str = to_string(c_i) ;
+                    reverse(str.begin() , str.end()) ;
+                    tmp = stoi(str) ;
+                    if (tmp == c_i)
+                    {
+                        c_i ++ ;
+                        continue ;
+                    }
+                    if (isPrime(tmp))
+                    {
+                        len ++ ;
+                        ret.push_back(c_i) ;
+                    }
+                }
+                c_i ++ ;
+            }
+            if (sta)
+                cout << ret[len - 1] << endl ;
+            else
+                cout << -1 << endl ;
+
+        }//else
+    }//while (cin >> num)
+    return 0 ;
+}
