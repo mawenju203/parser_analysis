@@ -1,0 +1,83 @@
+对于一个整数N（512 <= N <= 1024），计算2的N次方并在屏幕显示十进制结果。
+输入描述:
+输入一个整数N（512 <= N <= 1024）
+输出描述:
+2的N次方的十进制结果
+
+网址：https://www.nowcoder.com/practice/e9a4919b8848451d9aff81e3cdd133b1?tpId=90&&tqId=30930&rp=6&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+
+解题思路：
+因为数据会非常地大超过基本数据的范围，所以采用字符存储的方式；vector<char>；
+时间复杂度O(nlog2^n),log是以10为底的；空间复杂度O(n)；
+
+
+
+
+coding:
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    int n ;
+    vector<char> ret ;
+    ret.push_back('1') ;
+    int c_i , c_j ;
+    char incre ;
+    int lenV ;
+    for (c_i = 0 ; c_i < 512 ; c_i ++)
+    {
+        lenV = ret.size() ;
+        c_j = 0 ;
+        incre = '0' ;
+        while (c_j < lenV)
+        {
+            ret[c_j] = (ret[c_j] - '0') * 2 + incre - '0';
+            incre = ret[c_j] / 10 + '0';
+            ret[c_j] = ret[c_j] % 10 + '0' ;
+            c_j ++ ;
+        }
+        if (incre != '0')
+            ret.push_back(incre) ;
+    }//for
+    int before = 512 ;
+    vector<char> copyRet(ret) ;
+    while (cin >> n)
+    {
+        if (n != before)
+        {
+            if (n > before)
+                c_i = before ;
+            else
+            {
+                copyRet.clear() ;
+                copyRet = ret ;
+                c_i = 512 ;
+            }
+            for ( ; c_i < n ; c_i ++)
+            {
+                incre = '0' ;
+                lenV = copyRet.size() ;
+                c_j = 0 ;
+                while (c_j < lenV)
+                {
+                    copyRet[c_j] = (copyRet[c_j] - '0') * 2 + incre - '0';
+                    incre = copyRet[c_j] / 10 + '0';
+                    copyRet[c_j] = copyRet[c_j] % 10 + '0' ;
+                    c_j ++ ;
+                }
+                if (incre != '0')
+                    copyRet.push_back(incre) ;
+            }
+            before = n ;
+        }
+        c_i = copyRet.size() - 1;
+        while(c_i > -1)
+            cout << copyRet[c_i --] ;
+        cout << endl ;
+
+    }
+    return 0 ;
+
+}
