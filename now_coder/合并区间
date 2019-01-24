@@ -1,0 +1,83 @@
+用x,y表示一个整数范围区间，现在输入一组这样的范围区间(用空格隔开)，请输出这些区间的合并。
+输入描述:
+一行整数，多个区间用空格隔开。区间的逗号是英文字符。
+输出描述:
+合并后的区间，用过空格隔开，行末无空格
+
+网址：https://www.nowcoder.com/practice/0596b6232ce74b18b60ba0367d7f2492?tpId=90&&tqId=30931&rp=6&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+1. [m , n] ; [x , y] => [m , n]     当且仅当：m <= x && y <= n
+2. [m , n] ; [x , y] => [m , y]     当且仅当：m <= x && y >= n && n >= x
+3. [m , n] ; [x , y] => [x , n]     当且仅当：x <= m && y >= m && y <= n
+4. [m , n] ; [x , y] => [x , y]     当且仅当：x <= m && n <= y
+
+然后是每一次ret里面的每一个元素进行比较；满足条件的，先从ret.erase();遍历完ret；再添加；
+
+
+coding：
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+void  printDoubleV(vector<vector<int>> data)
+{
+    int c_i ;
+    for (c_i = 0 ; c_i < data.size() ; c_i ++)
+    {
+        if (c_i == 0)
+            cout << data[c_i][0] << ',' << data[c_i][1] ;
+        else
+            cout << ' ' << data[c_i][0] << ',' << data[c_i][1] ;
+    }
+    cout << endl ;
+}
+bool cmpData(vector<int> one , vector<int> two)
+{
+    return one[0] < two[0] ? true : false ;
+}
+int main()
+{
+    int m , n ;
+    char c ;
+    vector<vector<int>> ret ;
+    vector<int> tmp ;
+    while (cin >> m >> c >> n)
+    {
+        int c_i = ret.size() - 1;
+        for( ; c_i > -1 ; c_i --)
+        {
+            if (m <= ret[c_i][0] && ret[c_i][1] <= n)
+            {
+                ret.erase(ret.begin() + c_i) ;
+                continue ;
+            }
+            if (m <= ret[c_i][0] && n >= ret[c_i][0] && n <= ret[c_i][1])
+            {
+                n = ret[c_i][1] ;
+                ret.erase(ret.begin() + c_i) ;
+                continue ;
+            }
+            if (m > ret[c_i][0] && ret[c_i][1] >= m && ret[c_i][1] <= n)
+            {
+                m = ret[c_i][0] ;
+                ret.erase(ret.begin() + c_i) ;
+                continue ;
+            }
+            if (m >= ret[c_i][0] && ret[c_i][1] >= n)
+            {
+                m = ret[c_i][0] ;
+                n = ret[c_i][1] ;
+                ret.erase(ret.begin() + c_i) ;
+                continue ;
+            }
+        }//for ;
+        tmp.push_back(m) ;
+        tmp.push_back(n) ;
+        ret.push_back(tmp) ;
+        tmp.clear() ;
+        sort(ret.begin() , ret.end() , cmpData) ;
+    }//while
+    printDoubleV(ret) ;
+    return 0 ;
+}
