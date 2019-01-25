@@ -1,0 +1,63 @@
+如果一个整数只能被1和自己整除,就称这个数是素数。
+如果一个数正着反着都是一样,就称为这个数是回文数。例如:6, 66, 606, 6666
+如果一个数字既是素数也是回文数,就称这个数是回文素数
+牛牛现在给定一个区间[L, R],希望你能求出在这个区间内有多少个回文素数。
+输入描述:
+输入包括一行,一行中有两个整数(1 ≤ L ≤ R ≤ 1000)
+输出描述:
+输出一个整数,表示区间内回文素数个数。
+
+网址：https://www.nowcoder.com/practice/4802faa9afb54e458b93ed372e180f5c?tpId=90&&tqId=30793&rp=1&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+判断素数；注意 1 不是素数和合数；
+时间复杂度：O(n - m + 1) ; 空间复杂度：O(1)
+
+
+
+
+
+
+
+coding：
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+using namespace std;
+bool isPrime(int num)
+{
+    if (num == 1)
+        return false ;
+    int mid = sqrt(num) ;
+    for (int c_i = 2 ; c_i <= mid ; c_i ++)
+        if (num % c_i == 0)
+            return false ;
+    return true ;
+}
+int reversePrime()
+{
+    int m , n ;
+    int len ;
+    int tmp ;
+    string strtmp ;
+    int c_i ;
+    while (cin >> m >> n)
+    {
+        len = 0 ;
+        c_i = m ;
+        while (c_i <= n)
+        {
+            strtmp = to_string(c_i) ;
+            reverse(strtmp.begin() , strtmp.end()) ;
+            tmp = stoi(strtmp) ;
+            if (c_i == tmp)
+            {
+                if (isPrime(c_i) && isPrime(tmp))
+                    len ++ ;
+            }
+            c_i ++ ;
+        }
+        cout << len << endl ;
+    }
+    return 0 ;
+}
