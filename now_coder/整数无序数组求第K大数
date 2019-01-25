@@ -1,0 +1,70 @@
+给定无序整数序列，求其中第K大的数，例如{45，67，33，21}，第2大数为45
+输入描述:
+输入第一行为整数序列，数字用空格分隔，如：45 67 33 21
+输入第二行一个整数K，K在数组长度范围内，如：2
+输出描述:
+输出第K大的数，本例为第2大数：45
+
+
+网址：https://www.nowcoder.com/practice/097ab63cffa847d89716f2ca8c23524f?tpId=90&&tqId=30914&rp=8&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+采用的是快排的思想；
+时间复杂度为O(nlogn)；空间复杂度为O(logn)；
+
+coding：
+#include<iostream>
+#include<vector>
+#include<algorithm>  
+using namespace std;
+int get_k(vector<int> data , int Vstart , int Vover , int k)
+{
+    if (Vstart == Vover)
+        return data[Vstart] ;
+    int tmp = data[Vstart] ;
+    int c_s = Vstart , c_e = Vover ;
+    bool state = true ;
+    while (c_s != c_e)
+    {
+        if (state)
+        {
+            if (data[c_e] >= tmp)
+            {
+                data[c_s] = data[c_e] ;
+                c_s ++ ;
+                state = false ;
+            }
+            else
+                c_e -- ;
+        }//state = true ;
+        else
+        {
+            if (data[c_s] <= tmp)
+            {
+                data[c_e] = data[c_s] ;
+                c_e -- ;
+                state = true ;
+            }
+            else
+                c_s ++ ;
+        }
+    }
+    data[c_s] = tmp ;
+    if (c_s == k)
+        return tmp ;
+    else if (c_s < k)
+        return get_k(data , c_s + 1 , Vover , k) ;
+    else
+        return get_k(data , Vstart , c_s - 1 , k) ;
+}
+int main()
+{
+    vector<int> data ;
+    int k ;
+    while (cin >> k)
+        data.push_back(k) ;
+    data.pop_back() ;
+    int tmp = get_k(data , 0 , data.size() - 1 , k - 1) ;
+    cout << tmp << endl ;
+    return 0 ;
+}
