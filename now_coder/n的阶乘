@@ -1,0 +1,38 @@
+输入一个整数n，输出n的阶乘（每组测试用例可能包含多组数据，请注意处理）
+输入描述:
+一个整数n(1<=n<=20)
+输出描述:
+n的阶乘
+
+网址：https://www.nowcoder.com/practice/97be22ee50b14cccad2787998ca628c8?tpId=60&&tqId=29489&rp=1&ru=/activity/oj&qru=/ta/tsing-kaoyan/question-ranking
+
+解题思路：
+利用二分法的思想；
+
+coding:
+#include<iostream>
+#include<vector>
+using namespace std;
+long long N_N1_answer(int c_s , int c_e)
+{
+    if (c_s == c_e)
+        return c_s ;
+    else if (c_s == c_e - 1)
+        return c_s * c_e ;
+    else
+    {
+        int tmp = (c_s + c_e) >> 1 ;
+        return N_N1_answer(c_s , tmp) * N_N1_answer(tmp + 1 , c_e) ;
+    }
+
+}
+
+int main()
+{
+    int n ;
+    while (cin >> n)
+    {
+        cout << N_N1_answer(1 , n) << endl ;
+    }
+    return 0 ;
+}
