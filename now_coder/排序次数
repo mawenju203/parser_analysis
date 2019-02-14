@@ -18,6 +18,12 @@
 遍历顺序为：数组的长度（初始化的长的）；每次遍历的为vector的最新长度；
 时间复杂度为：O(n * 2n)； 空间复杂度为O(2n)；
 
+
+思路2：
+首先使用sort（）排序；
+然后，从原始的序列中寻找到有序的包含（起点）的子序列长度 len ； n（序列长度） - len 即为所求的结果；
+时间复杂度为：O(n * log n)； 空间复杂度为O(n)；
+
 coding：
 #include <iostream>
 #include <vector>
@@ -40,5 +46,39 @@ int main(){
         }
     }
     cout<<count;
+    return 0;
+}
+
+
+
+
+coding 2:
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int i, n;
+    int index;
+    int tmp ;
+    vector<int> data ;
+    while(cin>>n)
+    {
+        for (i=0; i<n; i++)
+        {
+            cin >> tmp;
+            data.push_back(tmp) ;
+        }
+        vector<int> data_copy(data) ;
+        sort(data_copy.begin(), data_copy.end());
+        index=0;
+        //核心思想：
+        for (i=0; i<n; i++)
+            if (data[i] == data_copy[index])
+                index++;
+        cout<< n - index << endl;
+        data.clear() ;
+    }
     return 0;
 }
