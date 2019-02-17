@@ -1,0 +1,73 @@
+题目描述
+在十进制表示中，任意一个正整数都可以用字符’0’-‘9’表示出来。但是当’0’-‘9’这些字符每种字符的数量有限时，可能有些正整数就无法表示出来了。比如你有两个‘1’，一个‘2’，那么你能表示出11，12，121等等，但是无法表示出10，122，200等数。 
+现在你手上拥有一些字符，它们都是’0’-‘9’的字符。你可以选出其中一些字符然后将它们组合成一个数字，那么你所无法组成的最小的正整数是多少？
+输入描述:
+第一行包含一个由字符’0’-‘9’组成的字符串，表示你可以使用的字符。
+1 ≤字符串长度≤ 1000
+输出描述:
+输出你所无法组成的最小正整数
+
+网址：https://www.nowcoder.com/practice/024c3b99edc34b84999c5830f748a841?tpId=90&&tqId=30985&rp=1&ru=/activity/oj&qru=/ta/2018test/question-ranking
+
+解题思路：
+首先是统计 0 ~ 9 的个数；
+然后 1 2 3 4 5 6 7 8 9 0 计算个数；每轮单个数字的个数；
+例如 110 必须有 2个 1 和 一个 0 ；
+时间复杂度O(n) ；空间复杂度O(1)；
+
+
+
+coding：
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<int> data(10 , 0) ;
+    string str ;
+    while (cin >> str)
+    {
+        int c_i = 0 ;
+        while (c_i < str.length())
+            data[str[c_i ++] - '0'] ++ ;
+        data.push_back(data[0]) ;
+        data.erase(data.begin()) ;
+        int c_j = 1 ;
+        bool sta = false ;
+        //程序的核心
+        while (c_j)
+        {
+            c_i = 0 ;
+            while (c_i < 10)
+            {
+                if (data[c_i] < c_j)
+                {
+                    int tmp = 0 ;
+                    if (c_i == 9)
+                    {
+                        cout << 10 ;
+                        tmp = 1 ;
+                        while (tmp ++ < c_j)
+                            cout << 0 ;
+                    }
+                    else
+                    {
+                        while (tmp ++ < c_j)
+                            cout << c_i + 1 ;
+                    }
+                    cout << endl ;
+                    sta = true ;
+                    break ;
+                }
+                c_i ++ ;
+            }
+            if (sta)
+                break ;
+            c_j ++ ;
+        }
+        c_i = 0 ;
+        while (c_i < 10)
+            data[c_i ++] = 0 ;
+    }
+    return 0 ;
+}
