@@ -1,0 +1,58 @@
+Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+
+Example:
+
+Input: 13
+Output: 6 
+Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
+
+网址：https://leetcode.com/problems/number-of-digit-one/
+
+解体思路：
+例如：
+分别按照：_ _ _ _  4 _ _ _ _ 4 _ _ ;
+分别计算 十个位置，每个位置为 1 的个数；
+程序写的有些啰嗦；主要是逻辑开始不清晰；
+
+coding：
+
+class Solution {
+public:
+    int countDigitOne(int n) {
+       int num , tmp ;
+       long long c_i ;
+       if (n <= 0)
+            return 0 ;
+        else if (n == 1)
+            return 1 ;
+        num = 1 ;
+        c_i = 10 ;
+        while (c_i <= n)
+        {
+            if (c_i * 2 <= n)
+                num += c_i ;
+            else
+                num += (n - c_i + 1) ;
+            c_i *= 10 ;
+        }
+        c_i = 10 ;
+        tmp = 1 ;
+        while (c_i < n)
+        {
+            if ((n - 1) / tmp % 10 < 2)
+            {
+                num += ((n - 1) / c_i - 1) * tmp ;
+                if (tmp <= n % c_i)
+                    num += (n % tmp + 1) ;
+            }
+            else
+            {
+                num += (n - 1) / c_i * tmp ;
+            }
+
+            c_i *= 10 ;
+            tmp *= 10 ;
+        }
+        return num ;
+    }
+};
