@@ -15,7 +15,16 @@ Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
 程序写的有些啰嗦；主要是逻辑开始不清晰；
 
 coding:
-int computerOneNumChange()
+
+int powNum(int len)
+{
+    int c_i = 0 ;
+    int ret = 1 ;
+    while (c_i ++ < len)
+        ret *= 10 ;
+    return ret ;
+}
+int main()
 {
     string str ;
     int c_i , num , lenStr ;
