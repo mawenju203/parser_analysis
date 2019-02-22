@@ -14,8 +14,59 @@ Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
 分别计算 十个位置，每个位置为 1 的个数；
 程序写的有些啰嗦；主要是逻辑开始不清晰；
 
-coding：
+coding:
+int computerOneNumChange()
+{
+    string str ;
+    int c_i , num , lenStr ;
 
+    //long lenStr ;
+    while (cin >> str)
+    {
+        num = 0 ;
+        if (str[0] == '-')
+        {
+            cout << 0 << endl ;
+            continue ;
+        }
+        lenStr = str.length() ;
+        if (lenStr == 1)
+        {
+            if (atoi(str.c_str()))
+                cout << 1 << endl ;
+            else
+                cout << 0 << endl ;
+            continue ;
+        }
+        if (str[0] == '1')
+            num += ((atoi(str.c_str()) % powNum(lenStr - 1)) + 1) ;
+        else
+            num += pow(10 , lenStr - 1) ;
+        if (str[lenStr - 1] >= '1')
+            num += (atoi(str.c_str()) / 10 + 1) ;
+        else
+            num += atoi(str.c_str()) / 10 ;
+        c_i = 1 ;
+        while (c_i < lenStr - 1)
+        {
+            if (str[c_i] > '1')
+                num += (atoi(str.substr(0 , c_i).c_str()) + 1) * powNum(lenStr - c_i - 1);
+            else if (str[c_i] < '1')
+                num += atoi(str.substr(0 , c_i).c_str()) * powNum(lenStr - c_i - 1);
+            else
+            {
+                num += atoi(str.substr(0 , c_i).c_str()) * powNum(lenStr - c_i - 1);
+                num += (atoi(str.substr(c_i + 1).c_str()) + 1) ;
+            }
+            c_i ++ ;
+        }
+        cout << num << endl ;
+    }
+
+    return 0 ;
+}
+
+coding2：
 class Solution {
 public:
     int countDigitOne(int n) {
