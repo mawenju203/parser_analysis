@@ -14,8 +14,8 @@ Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
 分别计算 十个位置，每个位置为 1 的个数；
 程序写的有些啰嗦；主要是逻辑开始不清晰；
 
-coding:
 
+coding:
 int powNum(int len)
 {
     int c_i = 0 ;
@@ -24,6 +24,7 @@ int powNum(int len)
         ret *= 10 ;
     return ret ;
 }
+answer1:
 int main()
 {
     string str ;
@@ -74,6 +75,49 @@ int main()
 
     return 0 ;
 }
+
+answer2:
+    int countDigitOne(int n) {
+    int c_i , num , bitl , tmp;
+    //while (cin >> n)
+    {
+        if (n < 1)
+        {
+            num = 0 ;
+            return num ;
+            
+        }
+        else if (n < 10)
+        {
+            num = 1 ;
+            return num ;
+        }
+        bitl = 0 ;
+        tmp = n ;
+        while (tmp)
+        {
+            bitl ++ ;
+            tmp /= 10 ;
+        }
+        num = 0 ;
+        c_i = 0 ;
+        while (c_i < bitl)
+        {
+            tmp = powNum(bitl - c_i - 1) ;
+            if (n / tmp % 10 > 1)
+                num += (n / tmp / 10 + 1) * tmp ;
+            else if (n / tmp % 10 < 1)
+                num += n / tmp / 10 * tmp ;
+            else
+            {
+                num += (n / tmp / 10) * tmp ;
+                num += (n % tmp + 1);
+            }
+            c_i ++ ;
+        }
+    }
+        return num ;
+    }
 
 coding2：
 class Solution {
