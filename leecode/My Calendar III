@@ -106,6 +106,42 @@ public:
     }
 };
 
+解题思路：
+10 20
+50 60
+10 40
+5  15
+5  10
+25 55
+
+5 10 15 20 25 40 50 55 60
+0 1  0  -1 0  0  0  0  0  （10 ， 20）
+0 1  0  -1 0  0  1  0  -1 （50 ， 60）
+0 2  0  -1 0  -1 1  0  -1 （10 ， 40）
+1 2  -1 -1 0  -1 1  0  -1 （5  ， 15）
+2 1  -1 -1 0  -1 1  0  -1 （5  ， 10）
+2 1  -1 -1 1  -1 1  -1 -1 （25 ， 55）
+然后计算 最大连续数组；
+
+coding 2：
+class MyCalendarThree {
+public:
+    map<int, int> cld;
+    MyCalendarThree() {
+        
+    }
+    
+    int book(int start, int end) {
+        cld[start]++;
+        cld[end]--;
+        int result = 0, k = 0;
+        for (auto p: cld) {
+            k = k + p.second;
+            if (result < k) result = k;
+        }
+        return result;
+    }
+};
 /**
  * Your MyCalendarThree object will be instantiated and called as such:
  * MyCalendarThree obj = new MyCalendarThree();
