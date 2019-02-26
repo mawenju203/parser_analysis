@@ -1,0 +1,87 @@
+假设 LeetCode 即将开始其 IPO。为了以更高的价格将股票卖给风险投资公司，LeetCode希望在 IPO 之前开展一些项目以增加其资本。 由于资源有限，它只能在 IPO 之前完成最多 k 个不同的项目。帮助 LeetCode 设计完成最多 k 个不同项目后得到最大总资本的方式。
+
+给定若干个项目。对于每个项目 i，它都有一个纯利润 Pi，并且需要最小的资本 Ci 来启动相应的项目。最初，你有 W 资本。当你完成一个项目时，你将获得纯利润，且利润将被添加到你的总资本中。
+
+总而言之，从给定项目中选择最多 k 个不同项目的列表，以最大化最终资本，并输出最终可获得的最多资本。
+
+示例 1:
+
+输入: k=2, W=0, Profits=[1,2,3], Capital=[0,1,1].
+
+输出: 4
+
+解释:
+由于你的初始资本为 0，你尽可以从 0 号项目开始。
+在完成后，你将获得 1 的利润，你的总资本将变为 1。
+此时你可以选择开始 1 号或 2 号项目。
+由于你最多可以选择两个项目，所以你需要完成 2 号项目以获得最大的资本。
+因此，输出最后最大化的资本，为 0 + 1 + 3 = 4。
+
+网址：https://leetcode.com/problems/ipo/
+
+解题思路：
+
+首先是按照： Profits=[1,2,3] 的大小排序，然后参考 Capital=[0,1,1].
+循环次数为： min(k ,  Profits.size());
+单次循环：
+找到第一个Capital[c_j] < W ;
+if (Capital[c_j] <= W)
+{
+W += Profits[c_j] ;
+删除对应的Profits[c_j] , Capital[c_j] ;
+}
+如果 找不到 则结束 循环；
+时间复杂度O(n*n) 这个时间复杂度有问题；
+空间复杂度O(n)；
+
+coding：
+struct connectInt{
+int firstI , secondI;
+connectInt(int x , int y) : firstI(x) , secondI(y) {}
+};
+bool comparaDouInt(connectInt one , connectInt two)
+{
+    if (one.firstI > two.firstI)
+        return true ;
+    else if (one.firstI == two.firstI)
+    {
+        if (one.secondI < two.secondI)
+            return true ;
+        else return false ;
+    }
+    else return false ;
+}
+class Solution {
+public:
+
+int findMaximizedCapital(int k, int w, vector<int>& Profits, vector<int>& Capital) {
+    vector<connectInt> data ;
+    int c_i = 0 , c_j , lenvec = Profits.size();
+    while (c_i < lenvec)
+    {
+        data.push_back(connectInt{Profits[c_i] , Capital[c_i]}) ;
+        c_i ++ ;
+    }
+    sort(data.begin() , data.end() , comparaDouInt) ;
+    int lenSize = k > lenvec ? lenvec : k ;
+    bool sta ;
+    for (c_i = 0 ; c_i < lenSize ; c_i ++)
+    {
+        sta = true ;
+        for (c_j = 0 ; c_j < lenvec ; c_j ++)
+        {
+            if (data[c_j].secondI <= w )
+            {
+                w += data[c_j].firstI ;
+                data.erase(data.begin() + c_j) ;
+                sta = false ;
+                lenvec -- ;
+                break ;
+            }
+        }
+        if (sta)
+            break ;
+    }
+    return w ;
+}
+};
