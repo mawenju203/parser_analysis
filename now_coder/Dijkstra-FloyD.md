@@ -1,5 +1,5 @@
 
-##牛牛取快递：
+#牛牛取快递：
 
 牛牛的快递到了，他迫不及待地想去取快递，但是天气太热了，以至于牛牛不想在烈日下多走一步。他找来了你，请你帮他规划一下，他最少要走多
 少距离才能取回快递。
@@ -34,6 +34,11 @@ int Dijkstra(int Start , int End , int **arc , int len)
         }
         sta[local] = false ;
         //更新dis
+        /*
+        dis[local] != INT_MAX ;
+        arc[local][c_j] != INT_MAX ;
+        INT_MAX + INT_MAX 超过 int 表示的范围
+        */
         for (c_j = 1 ; c_j <= len ; c_j ++)
         {
             if (sta[c_j] && dis[local] != INT_MAX && arc[local][c_j] != INT_MAX && dis[c_j] > dis[local] + arc[local][c_j])
