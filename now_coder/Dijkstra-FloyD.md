@@ -120,3 +120,100 @@ int FloyD()
     return 0 ;
 }
 ```
+
+## 解题思路：
+**正确的答案**
+```
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<climits>
+#include<map>
+using namespace std ;
+struct ThriData
+{
+    int first ;
+    int second ;
+    int Three ;
+    ThriData(int x , int y , int z): first(x) , second(y) , Three(z) {}
+    bool operator < (const ThriData& cmp)const
+    {
+        return first < cmp.first ;
+    }
+};
+int newDijkstraChange(int Start , int End , vector<ThriData>& arc , int len)
+{
+    vector<int> dis(len + 1 , INT_MAX) ;
+    vector<int> sta(len + 1 , true) ;
+    dis[Start] = 0 ;
+    int c_i , c_j , minNum , local ;
+    local = Start ;
+    int tmplen = arc.size() ;
+    map<int , int> connectLocal ;
+    c_i = 0 ;
+    while (c_i < len)
+    {
+        connectLocal[c_i] = tmplen ;
+        c_i ++ ;
+    }
+    c_i = tmplen - 1 ;
+    while (c_i > -1)
+    {
+        connectLocal[arc[c_i].first] = c_i ;
+        c_i -- ;
+    }
+    c_i = 1;
+    while (c_i ++ < len)
+    {
+        minNum = INT_MAX ;
+        //选择起点
+        for (c_j = 1 ; c_j <= len ; c_j ++)
+        {
+            if (sta[c_j] && minNum >= dis[c_j])
+            {
+                minNum = dis[c_j] ;
+                local = c_j ;
+            }
+        }
+        if (dis[local] == INT_MAX)
+            break ;
+        sta[local] = false ;
+        //更新dis
+        for (c_j = connectLocal[local] ; c_j < tmplen ; c_j ++)
+        {
+            if (arc[c_j].first > local)
+                break ;
+            if (arc[c_j].first == local && dis[arc[c_j].second] > dis[local] + arc[c_j].Three)
+                dis[arc[c_j].second] = dis[local] + arc[c_j].Three ;
+        }
+    }//while
+    return dis[End] ;
+}
+int main()
+{
+    int N , M , S , T ;
+    int c_k , c_i ;
+    int U , V , D ;
+    vector<ThriData> Value ;
+    while (cin >> N >> M >> S >> T)
+    {
+        c_k = 0 ;
+        while (c_k ++ < M)
+        {
+            cin >> U >> V >> D ;
+            Value.push_back(ThriData{U , V , D}) ;
+        }
+        sort(Value.begin() , Value.end()) ;
+        int ret = 0 ;
+        ret += newDijkstraChange(S , T , Value , N) ;
+        ret += newDijkstraChange(T , S , Value , N) ;
+        cout << ret << endl ;
+        for (c_i = 0 ; c_i < Value.size() ; c_i ++)
+            cout << Value[c_i].first << '\t' << Value[c_i].second << '\t' << Value[c_i].Three << endl;
+        Value.clear() ;
+    }
+    return 0 ;
+}
+
+```
+
