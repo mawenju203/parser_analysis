@@ -18,12 +18,15 @@
 #### 网址：https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/
 
 #### **解题思路:**
+![图片解释.jpeg](https://img-blog.csdnimg.cn/20190304122404255.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTAxNTUzMzc=,size_16,color_FFFFFF,t_70)
 
-找到中位数：nth_element() ;可以在O(n)的时间内找到对应i的数据;无返回值;具体查看函数的定义;
+ 找到中位数:
+ 
+ nth_element();可以在O(n)的时间内找到对应i的数据;无返回值;具体查看函数的定义;
+ 
+**时间复杂度O(n);**
 
 **博客地址：（https://blog.csdn.net/u010155337/article/details/88109436）**
-
-**时间复杂度O(n);**
 
 ### **代码实现：**
 ```
