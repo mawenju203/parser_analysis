@@ -29,8 +29,8 @@
 
 **第一张是原理图；第二张为 n = 23的计算过程（原理实现）；**  
 <center>
-<img id="replation" src="https://img-blog.csdnimg.cn/20190308102357883.jpg"  width="90%" height="80%">
-<img id="replation" src="https://img-blog.csdnimg.cn/20190308102243315.jpg"  width="90%" height="30%">
+<img  src="https://img-blog.csdnimg.cn/20190308102357883.jpg"  width="90%" height="80%">
+<img  src="https://img-blog.csdnimg.cn/20190308102243315.jpg"  width="90%" height="30%">
 </center>
 
 **代码：**
