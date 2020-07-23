@@ -18,3 +18,24 @@ linux上安装java jdk：
 6、 git add . （注：别忘记后面的.，此操作是把Test文件夹下面的文件都添加进来）
     git commit  -m  "提交信息"  （注：“提交信息”里面换成你需要，如“first commit”
     git push -u origin master   （注：此操作目的是把本地仓库push到github上面，此步骤需要你输入帐号和密码）
+
+7.1、截取时间段
+截取 2019-06-25 10:10 到 2019-06-25 10:20 之间的日志记录，apollo-service.log 为你要截取的文件名称， new2.log 截取之后保存日志的文件名称。
+sed -n '/2019-06-25 10:10/, /2019-06-25 10:20/p' catalina.out  > new1.log
+sed -n '/2019-06-25 10:20:47/, /2019-06-25 10:26:47/p' catalina.out  > new2.log
+sed -n '/2019-06-25 10:20:47.728/, /2019-06-25 10:26:47.728/p' catalina.out  > new3.log
+
+说明：时间段可根据自己的需要进行修改，可精确到毫秒。
+
+7.2、截取行数
+
+grep -n "要查询的关键字"  xxxx.file
+截取 catalina.out  文件中的100 - 500 行的日志， new.log 为截取保存之后的文件。
+sed -n '100,500'p apollo-service.log > new.log
+
+
+8、
+查找目录： find /(查找范围) -name '查找关键字' -typed
+查找文件： find /(查找范围) -name '查找关键字' -print
+
+
